@@ -18,9 +18,9 @@ router.get('/books/search/:topic', async (req, res) => {
 
 })
 
-router.get('/books/info/:name', async (req, res) => {
+router.get('/books/info/:ISBN', async (req, res) => {
     try {
-        const books = await Catalog.find({ name: req.params.name })
+        const books = await Catalog.find({ ISBN: req.params.ISBN })
         if (!books.length) {
             return res.status(404).send()
         }
@@ -30,17 +30,17 @@ router.get('/books/info/:name', async (req, res) => {
     }
 })
 
-router.patch('/books/:name', async (req, res) => {
+router.patch('/books/:ISBN', async (req, res) => {
 
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['count', 'price']
+    const allowedUpdates = ['ISBN', 'count', 'price']
 
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
     if (!isValidOperation) {
-        return res.status(500).send({ msg: "unvalid update operation" })
+        return res.status(500).send({ msg: "invalid update operation" })
     }
     try {
-        const book = await Catalog.findOne({ name: req.params.name })
+        const book = await Catalog.findOne({ ISBN: req.params.ISBN })
         if (!book) {
             return res.status(404).send()
         }

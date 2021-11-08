@@ -1,11 +1,21 @@
 const mongoose = require('mongoose')
 
 const catalogSchema = new mongoose.Schema({
-    name:{
+    ISBN: {
+        type: Number,
+        required: true,
+        unique: true,
+        validate(val) {
+            if (val < 0 || val.toString().length !== 10) {
+                throw new Error("Please! \"ISBN\" must be of length 10 and a positive number")
+            }
+        }
+    },
+    name: {
         type: String,
         required: true,
         trim: true,
-        lowercase:true
+        lowercase: true
     },
     count: {
         type: Number,
@@ -29,7 +39,7 @@ const catalogSchema = new mongoose.Schema({
     },
     topic: {
         type: String,
-        required:true,
+        required: true,
         trim: true,
         lowercase: true
     }

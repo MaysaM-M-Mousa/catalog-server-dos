@@ -8,6 +8,6 @@ const PORT = 3000
 app.use(express.json())
 app.use(catalogRouter)
 
-app.listen(3000, () => {
+app.listen(PORT, () => {
     console.log("Running Catalog Server on Port " + PORT)
 })
